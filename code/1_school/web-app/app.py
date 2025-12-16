@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
 import functools
+import re  # For regex validation
 import main # Import main.py for DB_NAME and migrate_schema
 
 # --- Configuration ---
@@ -23,9 +24,37 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+def is_valid_word(word):
+    """
+    Req 4: Input Validation - Strict validation for words
+    Only allows letters (A-Z, a-z) and spaces.
+    Returns: (is_valid: bool, error_message: str)
+    """
+    # Check for empty string
+    if not word or not word.strip():
+        return False, "Word cannot be empty"
+    
+    # Check length (reasonable bounds)
+    if len(word) > 100:
+        return False, "Word is too long (max 100 characters)"
+    
+    # Regex: only letters and spaces allowed
+    # ^[a-zA-Z\s]+$ means: start, one or more letters/spaces, end
+    if not re.match(r'^[a-zA-Z\s]+$', word):
+        return False, "Word can only contain letters and spaces (no numbers or special characters)"
+    
+    return True, None
+
+
 def login_required(view):
+    """
+    Req 1: User Authentication - Decorator for protected routes
+    Checks if user_id is in session. If not, redirects to login page.
+    Used to restrict access to dashboard and words pages for logged-in users only.
+    """
     @functools.wraps(view)
     def wrapped_view(**kwargs):
+        # Req 1: Authentication - Check if user has active session
         if 'user_id' not in session:
             flash('Please log in to access this page.', 'warning')
             return redirect(url_for('login'))
@@ -42,7 +71,12 @@ def index():
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():
+    """
+    REQ 1: User Authentication - Registration Route
+    Handles both GET (show form) and POST (process registration)
+    """
     if request.method == 'POST':
+        # Req 4: Input Validation - Extract user input from form
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
@@ -50,6 +84,7 @@ def register():
         cursor = db.cursor()
         error = None
 
+        # Req 4: Input Validation - Check for empty/missing required fields
         if not username:
             error = 'Username is required.'
         elif not email:
@@ -59,13 +94,16 @@ def register():
         
         if error is None:
             try:
+                # Req 1: Authentication - Secure password hashing using werkzeug
+                # Req 5: Database CREATE - Insert new user with hashed password
+                # Req 4: Security - Use parameterized query (?, ?, ?) to prevent SQL injection
                 cursor.execute(
                     "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
                     (username, email, generate_password_hash(password))
                 )
                 db.commit()
 
-                # Create a default project for the new user
+                # Req 6: Stretch Goal - Create default project for new user (multi-user system)
                 user_id = cursor.lastrowid
                 cursor.execute(
                     "INSERT INTO projects (name, user_id) VALUES (?, ?)",
@@ -87,6 +125,10 @@ def register():
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
+    """
+    Req 1: User Authentication - Login Route
+    Handles both GET (show login form) and POST (process login credentials)
+    """
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -94,18 +136,23 @@ def login():
         cursor = db.cursor()
         error = None
         
+        # Req 5: Database READ - Query user by username
+        # Req 4: Security - Use parameterized query (?) to prevent SQL injection
         cursor.execute(
             "SELECT * FROM users WHERE username = ?", (username,)
         )
         user = cursor.fetchone()
 
+        # Req 1: Authentication - Validate username exists
         if user is None:
             error = 'Incorrect username.'
+        # Req 1: Authentication - Validate password using secure hash comparison
         elif not check_password_hash(user['password_hash'], password):
             error = 'Incorrect password.'
 
         if error is None:
             session.clear()
+            # Req 1: Authentication - Create user session after successful login
             session['user_id'] = user['id']
             session['username'] = user['username'] # Store username in session
             flash('Logged in successfully!', 'success')
@@ -156,18 +203,27 @@ def words():
         return redirect(url_for('dashboard'))
 
     if request.method == 'POST':
+        # Req 4: Input Validation - Get and clean user input
         new_word = request.form['new_language_word'].strip()
         english_translation = request.form['english_translation'].strip()
         error = None
 
-        if not new_word:
-            error = 'New language word is required.'
-        elif not english_translation:
-            error = 'English translation is required.'
+        # Req 4: Input Validation - Use regex helper function for strict validation
+        is_valid_new_word, word_error = is_valid_word(new_word)
+        if not is_valid_new_word:
+            error = word_error
         
-        # --- Requirement: Perform error checking on the input from the user ---
+        # Req 4: Input Validation - Validate translation using same rules
+        is_valid_translation, translation_error = is_valid_word(english_translation)
+        if not error and not is_valid_translation:
+            error = f"Translation: {translation_error}"
+        
+        # Req 4: Input Validation - Only proceed if all validation passes
         if error is None:
             try:
+                # Req 5: Database CREATE - Insert new word
+                # Req 4: Security - Use parameterized query (?, ?, ?, ?) to prevent SQL injection
+                # Req 6: Stretch Goal - Store user_id & project_id for multi-user data isolation
                 cursor.execute(
                     "INSERT INTO words (new_language_word, english_translation, user_id, project_id) VALUES (?, ?, ?, ?)",
                     (new_word, english_translation, user_id, project_id)
@@ -180,9 +236,10 @@ def words():
         if error:
             flash(error, 'danger')
 
-    # --- Requirement: Generate at least 1 HTML page from the app ---
-    # --- Requirement: Modify content of HTML generated by the app based on user input ---
-    # This route serves words.html which lists words (modified by user input)
+    # Req 2: HTML Generation - Generate words.html template with dynamic content
+    # Req 5: Database READ - Query words for the current user and project
+    # Req 4: Security - Use parameterized query (?, ?) to prevent SQL injection
+    # Req 6: Stretch Goal - Only return words for THIS user (user_id), ensuring data isolation
     cursor.execute(
         "SELECT id, new_language_word, english_translation FROM words WHERE user_id = ? AND project_id = ? ORDER BY created_at DESC",
         (user_id, project_id)
@@ -193,12 +250,17 @@ def words():
 @app.route('/words/delete/<int:word_id>', methods=('POST',))
 @login_required
 def delete_word(word_id):
+    """
+    Req 5: Database DELETE - Delete a word by ID
+    Req 6: Stretch Goal - Verify ownership before deletion (security/multi-user)
+    """
     user_id = session['user_id']
     db = get_db()
     cursor = db.cursor()
     
     try:
-        # Ensure user owns the word
+        # Req 6: Stretch Goal - Ownership verification (ensure user owns this word)
+        # Req 4: Security - Use parameterized query (?, ?) to prevent SQL injection
         cursor.execute("SELECT 1 FROM words WHERE id = ? AND user_id = ?", (word_id, user_id))
         if cursor.fetchone() is None:
             flash("You do not have permission to delete this word.", "danger")

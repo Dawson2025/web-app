@@ -4,10 +4,15 @@ import os
 DB_NAME = "data/database.db" # Changed to database.db for clarity for a new project
 
 def migrate_schema():
+    """
+    Req 5: Database Integration - Create database schema with 3 tables
+    This runs once to initialize the database structure
+    """
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
 
-    # Create users table
+    # Req 1: Authentication - Users table stores login credentials
+    # UNIQUE constraints on username/email prevent duplicates (Req 4: Input Validation)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -18,7 +23,8 @@ def migrate_schema():
         )
     """)
 
-    # Create projects table (minimal for user association)
+    # Req 6: Stretch Goal - Projects table enables multi-user system
+    # FOREIGN KEY links to users table for data isolation
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS projects (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +35,9 @@ def migrate_schema():
         )
     """)
 
-    # Create words table (for the "Modify content" requirement)
+    # Req 5: Database Integration (CRUD) - Words table stores vocabulary
+    # FOREIGN KEYs ensure data isolation: each word belongs to a specific user & project
+    # This supports Req 6: Stretch Goal - Multi-user data isolation
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS words (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
