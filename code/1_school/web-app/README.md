@@ -5,47 +5,22 @@ Full-stack application with Flask, SQLite, Jinja2 templates, and CSS styling.
 ## Requirements Met ✅
 
 ### 1. User Authentication ✅
-- **Registration**: [`app.py` lines 43-85](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:43:1) (`/register` route)
-- **Login**: [`app.py` lines 88-118](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:88:1) (`/login` route)
-- **Password Hashing**: [`app.py` lines 18, 64](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:18:1) (werkzeug `generate_password_hash`)
-- **Sessions**: [`app.py` lines 108-111](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:108:1) (session management)
-- **Protected Routes**: [`app.py` lines 26-33](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:26:1) (`@login_required` decorator)
+Got a solid auth system working. Users can sign up with [`app.py` lines 43-85](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:43:1), and passwords are properly hashed using werkzeug. When you log in with [`app.py` lines 88-118](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:88:1), it checks your credentials safely. Sessions are managed properly with [`app.py` lines 108-111](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:108:1) so you stay logged in. The best part is the [`app.py` lines 26-33](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:26:1) decorator that protects routes - only logged-in users can access certain pages.
 
 ### 2. HTML Generation ✅
-- **Templates**: `templates/` directory with 5 Jinja2 templates
-  - [`base.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/base.html:1:1) - Template inheritance
-  - [`register.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/register.html:1:1) - Registration form
-  - [`login.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/login.html:1:1) - Login form
-  - [`dashboard.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/dashboard.html:1:1) - User dashboard
-  - [`words.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/words.html:1:1) - Word management (lines 1-58)
-- **Dynamic Content**: [`app.py` lines 44-50, 89-118](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:44:1) (render_template calls)
+Built 5 different templates that dynamically generate pages based on who's logged in. The [`base.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/base.html:1:1) sets up the structure, then each page like [`register.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/register.html:1:1), [`login.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/login.html:1:1), [`dashboard.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/dashboard.html:1:1), and [`words.html`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/words.html:1:1) builds on that. The [`app.py` lines 44-50, 89-118](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:44:1) routes pass different data to each template so everyone sees their own content.
 
 ### 3. CSS Styling & Assets ✅
-- **Stylesheet**: [`static/css/style.css`](cursor://file/c:/dev/web-app/code/1_school/web-app/static/css/style.css:1:1) (176 lines)
-  - Dark navbar, responsive layout, form styling, table design
-- **Images**: [`static/img/placeholder.png`](cursor://file/c:/dev/web-app/code/1_school/web-app/static/img/placeholder.png:1:1)
+Made it look decent with a professional [`static/css/style.css`](cursor://file/c:/dev/web-app/code/1_school/web-app/static/css/style.css:1:1) stylesheet. Dark navbar, clean responsive layout, proper form styling, and a readable table design. Plus there's an [`static/img/placeholder.png`](cursor://file/c:/dev/web-app/code/1_school/web-app/static/img/placeholder.png:1:1) for image support.
 
 ### 4. Input Validation & Error Handling ✅
-- **Strict Word Validation**: [`app.py` lines 27-46](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:27:1) (regex validation, only letters/spaces)
-- **Empty Fields**: [`app.py` lines 53-58](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:53:1) (registration validation)
-- **Word Validation**: [`app.py` lines 208-219](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:208:1) (regex check prevents numbers & special chars)
-- **Parameterized Queries**: [`app.py` lines 62-64, 97-98, 227](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) (SQL with `?` placeholders)
-- **Error Handling**: [`app.py` lines 78-81, 230-237](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:78:1) (try-catch, user feedback)
-- **Duplicate Prevention**: [`app.py` lines 78-79](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:78:1) (SQLite UNIQUE constraints)
-- **Frontend Validation**: [`templates/words.html` lines 9-11](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/words.html:9:1) (HTML5 pattern), [`lines 14-28`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/words.html:14:1) (JavaScript)
-- **Backend Regex**: Strict `^[a-Za-z\s]+$` pattern catches any paste-bypass attempts
+Made sure bad data doesn't get through. Users can't sneak numbers or special characters into word fields - the backend has a [`app.py` lines 27-46](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:27:1) regex pattern that catches everything. During registration, empty fields get rejected with [`app.py` lines 53-58](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:53:1). For word input specifically, there's [`app.py` lines 208-219](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:208:1) validation on the backend plus [`templates/words.html` lines 9-11](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/words.html:9:1) HTML5 patterns and [`lines 14-28`](cursor://file/c:/dev/web-app/code/1_school/web-app/templates/words.html:14:1) JavaScript to give instant feedback. All database queries use [`app.py` lines 62-64, 97-98, 227](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) parameterized queries to prevent SQL injection. Error messages are user-friendly with [`app.py` lines 78-81, 230-237](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:78:1) proper exception handling.
 
 ### 5. Database Integration (CRUD) ✅
-- **Schema**: [`main.py`](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:1:1) (54 lines) - 3 tables: users, projects, words
-- **CREATE**: [`app.py` lines 62-74](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) (user registration), [`lines 171-176`](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:171:1) (add word)
-- **READ**: [`app.py` lines 97-98](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:97:1) (login query), [`lines 130-135`](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1) (fetch words)
-- **DELETE**: [`app.py` lines 193-217](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1) (delete word with ownership check)
-- **Persistence**: `data/database.db` - SQLite file persists data
+The real heart of the app. The [`main.py`](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:1:1) sets up 3 related tables for users, projects, and words. When you register, it uses [`app.py` lines 62-74](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) to insert you into the database. Adding words uses [`app.py` lines 171-176`](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:171:1). Fetching your words happens with [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1), and you can delete with [`app.py` lines 193-217](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1). Everything gets persisted in `data/database.db`.
 
 ### 6. Stretch Goal: Multi-User System ✅
-- **User Isolation**: [`app.py` lines 149-150](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:149:1) (session user_id), [`lines 172-173`](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:172:1) (user_id in queries)
-- **Projects**: [`main.py` lines 35-39](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:35:1) (projects table), [`app.py` lines 68-74](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:68:1) (default project)
-- **Ownership Verification**: [`app.py` lines 193-205](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1) (check user_id before delete)
+Each user only sees their own data. The [`app.py` lines 149-150](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:149:1) tracks who's logged in, and that [`app.py` lines 172-173](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:172:1) user_id gets added to every database query. When you register, you automatically get a [`main.py` lines 35-39](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:35:1) default project. Before deleting anything, the app [`app.py` lines 193-205](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1) checks that you own it first.
 
 ## Quick Start
 ```bash
@@ -175,41 +150,31 @@ python3 app.py     # Start server on http://localhost:5000
 
 ## SQL Module Requirements ✅
 
-This web app also satisfies all **SQL Module** requirements:
+This web app also works perfectly for the **SQL Module** - it demonstrates all the core concepts:
 
 ### SQL Requirement 1: Database with Tables ✅
-- **Database File**: `data/database.db` (SQLite)
-- **Tables Created**: [`main.py` lines 13-48](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:13:1)
-  - `users` table - User account data
-  - `projects` table - User projects  
-  - `words` table - Language words with translations
-- Each table has proper constraints and relationships
+Got a proper database set up in `data/database.db` with [`main.py` lines 13-48](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:13:1). Three tables that actually relate to each other - `users` for accounts, `projects` for organizing work, and `words` for the vocabulary. Each table has constraints and foreign keys set up properly.
 
 ### SQL Requirement 2: Query Data (READ) ✅
-- **Login Query**: [`app.py` lines 97-98](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:97:1) - SELECT user from database
-- **Fetch Words**: [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1) - SELECT all words for user
-- **Verify Ownership**: [`app.py` lines 193-205](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1) - SELECT word to check ownership
+Reading from the database happens all over the place. When you log in, [`app.py` lines 97-98](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:97:1) queries your user info. Your words list comes from [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1) which pulls everything. Before you delete something, [`app.py` lines 193-205](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1) checks that it's actually yours.
 
 ### SQL Requirement 3: Add Data (CREATE) ✅
-- **User Registration**: [`app.py` lines 62-64](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) - INSERT new user
-- **Default Project**: [`app.py` lines 68-74](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:68:1) - INSERT project for user
-- **Add Word**: [`app.py` lines 171-176](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:171:1) - INSERT new word
+Inserting new records works throughout the app. Registration with [`app.py` lines 62-64](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) adds you to the users table. When you register, [`app.py` lines 68-74](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:68:1) creates a default project for you. Adding a word with [`app.py` lines 171-176](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:171:1) inserts it into the database.
 
 ### SQL Requirement 4: Update Data (UPDATE) ✅
-- **Update Project GPA**: [`app.py` lines 121-128](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:121:1) - UPDATE project record (stretch goal)
+You can modify data too. The project GPA can be updated with [`app.py` lines 121-128](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:121:1).
 
 ### SQL Requirement 5: Delete Data (DELETE) ✅
-- **Delete Word**: [`app.py` lines 214-217](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:214:1) - DELETE word with ownership verification
+Removing records is handled with [`app.py` lines 214-217](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:214:1) which makes sure you own the word before deleting it.
 
 ### SQL Stretch Goal 1: Joins Between Tables ✅
-- **Multi-Table Queries**: [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1) - JOIN words with user_id to isolate data
+The queries actually use JOINs to connect tables. When fetching words with [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1), it joins the words table with user_id to make sure each user only sees their own vocabulary.
 
 ### SQL Stretch Goal 2: Aggregate Functions ✅
-- **Count Words**: Dashboard displays word count per project
-- **Calculate Stats**: GPA calculations on projects
+Stats are calculated on the dashboard - word counts per project and GPA calculations so you can track your progress.
 
 ### SQL Stretch Goal 3: Date/Time Filtering ✅
-- **Timestamps**: Database tracks creation dates (can filter by date ranges)
+The database tracks when things were created so you can filter by date ranges if needed.
 
 ## Status
 ✅ Complete - All Web App requirements met with stretch goal
