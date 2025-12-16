@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome to your Dashboard, {{ session['username'] if session['username'] else 'User' }}!</h2>
+<p>Current Project: {{ current_project_name }}</p>
+<h3>Your Projects:</h3>
+{% if projects %}
+    <ul>
+        {% for project in projects %}
+            <li>{{ project['name'] }} (ID: {{ project['id'] }})</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No projects found. A default project was created for you upon registration.</p>
+{% endif %}
+<p>Go to <a href="{{ url_for('words') }}">Words</a> to manage your words.</p>
+{% endblock %}

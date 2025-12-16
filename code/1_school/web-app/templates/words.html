@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Words{% endblock %}
+{% block content %}
+<h2>Words for "{{ current_project_name }}"</h2>
+
+<h3>Add New Word</h3>
+<form method="post" action="{{ url_for('words') }}">
+    <label for="new_language_word">New Language Word</label>
+    <input type="text" name="new_language_word" id="new_language_word" required>
+    <label for="english_translation">English Translation</label>
+    <input type="text" name="english_translation" id="english_translation" required>
+    <button type="submit">Add Word</button>
+</form>
+
+<h3>Your Words</h3>
+{% if words %}
+    <table>
+        <thead>
+            <tr>
+                <th>New Language Word</th>
+                <th>English Translation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for word in words %}
+            <tr>
+                <td>{{ word['new_language_word'] }}</td>
+                <td>{{ word['english_translation'] }}</td>
+                <td>
+                    <!-- Edit/Delete functionality (simplified for bare minimum) -->
+                    <form action="{{ url_for('delete_word', word_id=word['id']) }}" method="post" style="display:inline;">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No words added yet. Add some above!</p>
+{% endif %}
+{% endblock %}

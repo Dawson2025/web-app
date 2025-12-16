@@ -1,0 +1,13 @@
+# Virtual environment
+.venv/
+
+# Node.js dependencies
+node_modules/
+
+# Database file
+data/*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
