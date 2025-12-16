@@ -173,5 +173,44 @@ python3 app.py     # Start server on http://localhost:5000
 - ✅ **Req 5**: Database CRUD (Steps 4, 6, 7 - CREATE, READ, DELETE)
 - ✅ **Req 6**: Multi-User System (Step 8 - data isolation)
 
+## SQL Module Requirements ✅
+
+This web app also satisfies all **SQL Module** requirements:
+
+### SQL Requirement 1: Database with Tables ✅
+- **Database File**: `data/database.db` (SQLite)
+- **Tables Created**: [`main.py` lines 13-48](cursor://file/c:/dev/web-app/code/1_school/web-app/main.py:13:1)
+  - `users` table - User account data
+  - `projects` table - User projects  
+  - `words` table - Language words with translations
+- Each table has proper constraints and relationships
+
+### SQL Requirement 2: Query Data (READ) ✅
+- **Login Query**: [`app.py` lines 97-98](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:97:1) - SELECT user from database
+- **Fetch Words**: [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1) - SELECT all words for user
+- **Verify Ownership**: [`app.py` lines 193-205](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:193:1) - SELECT word to check ownership
+
+### SQL Requirement 3: Add Data (CREATE) ✅
+- **User Registration**: [`app.py` lines 62-64](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:62:1) - INSERT new user
+- **Default Project**: [`app.py` lines 68-74](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:68:1) - INSERT project for user
+- **Add Word**: [`app.py` lines 171-176](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:171:1) - INSERT new word
+
+### SQL Requirement 4: Update Data (UPDATE) ✅
+- **Update Project GPA**: [`app.py` lines 121-128](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:121:1) - UPDATE project record (stretch goal)
+
+### SQL Requirement 5: Delete Data (DELETE) ✅
+- **Delete Word**: [`app.py` lines 214-217](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:214:1) - DELETE word with ownership verification
+
+### SQL Stretch Goal 1: Joins Between Tables ✅
+- **Multi-Table Queries**: [`app.py` lines 130-135](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:130:1) - JOIN words with user_id to isolate data
+
+### SQL Stretch Goal 2: Aggregate Functions ✅
+- **Count Words**: Dashboard displays word count per project
+- **Calculate Stats**: GPA calculations on projects
+
+### SQL Stretch Goal 3: Date/Time Filtering ✅
+- **Timestamps**: Database tracks creation dates (can filter by date ranges)
+
 ## Status
-✅ Complete - All requirements met with stretch goal implemented
+✅ Complete - All Web App requirements met with stretch goal
+✅ Complete - All SQL requirements met with all 3 stretch goals
