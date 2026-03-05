@@ -1,3 +1,4 @@
+// resource_id: d4082c1e-36e7-4ea8-b78c-bbb34273a68f
 import { chromium } from 'playwright';
 import path from 'path';
 import fs from 'fs';

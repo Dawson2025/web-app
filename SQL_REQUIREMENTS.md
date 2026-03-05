@@ -1,9 +1,14 @@
+---
+resource_id: "da5fc542-eb44-44f4-bf40-2ceead3e875b"
+---
 # SQL Module Requirements - Web App Implementation
 
 This document demonstrates how the Web App satisfies all SQL module requirements through its SQLite database implementation.
 
+<!-- section_id: "6bcfa8c6-de52-4b6e-be76-97a3d2acd9ea" -->
 ## 📋 Core Requirements
 
+<!-- section_id: "8dcfad06-bcde-4780-a4f5-7d0612a9aa34" -->
 ### Requirement 1: SQL Database with Tables ✅
 **File:** [`app.py` lines 1-40](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:1:40)
 
@@ -16,6 +21,7 @@ The web app creates a SQLite database with three tables:
 
 ---
 
+<!-- section_id: "276fb69b-ef9e-4400-9abe-7fb8f6dd68bb" -->
 ### Requirement 2: READ Operations ✅
 **File:** [`app.py` lines 108-145](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:108:145)
 
@@ -35,6 +41,7 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "facfe20d-7000-41a9-9ca7-044634b08d7c" -->
 ### Requirement 3: CREATE Operations ✅
 **File:** [`app.py` lines 146-170](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:146:170)
 
@@ -54,6 +61,7 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "5f83a03a-5668-41c5-bdc9-f5d1feb42baa" -->
 ### Requirement 4: UPDATE Operations ✅
 **File:** [`app.py` lines 172-178](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:172:178)
 
@@ -72,6 +80,7 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "13345f1c-08c2-4c64-9e49-2dec3356cfb8" -->
 ### Requirement 5: DELETE Operations ✅
 **File:** [`app.py` lines 179-195](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:179:195)
 
@@ -91,8 +100,10 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "e981a0f6-112b-47c3-be15-45aa4ec61b96" -->
 ## 🎯 Stretch Goals
 
+<!-- section_id: "c59460e9-0386-4768-91dc-a3b2e132e7b1" -->
 ### Stretch Goal 1: Additional Tables with JOINs ✅
 **File:** [`app.py` lines 65-85](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:65:85)
 
@@ -118,6 +129,7 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "d77d6410-7cf7-4604-af3d-70d5e4c30936" -->
 ### Stretch Goal 2: Aggregate Functions ✅
 **File:** [`app.py` lines 86-95](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:86:95)
 
@@ -143,6 +155,7 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "0109cbad-fc97-469d-83b1-d8648ca2b1df" -->
 ### Stretch Goal 3: Date/Time Filtering ✅
 **File:** [`app.py` lines 96-107](cursor://file/c:/dev/web-app/code/1_school/web-app/app.py:96:107)
 
@@ -168,16 +181,19 @@ This demonstrates:
 
 ---
 
+<!-- section_id: "a461dc20-8db2-40dd-a594-f1aae94f833f" -->
 ## 🧪 Testing User Story
 
 Follow these steps to verify all SQL requirements are working:
 
+<!-- section_id: "db897a9e-9b8d-448a-992a-b14e855069b2" -->
 ### 1. **Register & Create Project**
    - Navigate to `/register`
    - Create account with username "testuser" and password "test123"
    - Log in
    - View dashboard - project created automatically
 
+<!-- section_id: "1492f89d-f062-4b1d-a1e7-175d5f04caa4" -->
 ### 2. **CREATE: Add Words (Requirement 3)**
    - Click "Add Word"
    - Enter: Spanish word "gato", English: "cat"
@@ -185,34 +201,40 @@ Follow these steps to verify all SQL requirements are working:
    - Add 2-3 more words (French, German, etc.)
    - ✅ Words successfully stored in database
 
+<!-- section_id: "2bcc42d4-5255-45fa-a769-d6958331721f" -->
 ### 3. **READ: View All Words (Requirement 2)**
    - Words page displays all added words
    - Each word shows: language word, translation, date added
    - Filter by project works correctly
    - ✅ SELECT queries retrieve all data accurately
 
+<!-- section_id: "a5d5fadd-3171-4ae3-826c-447508487135" -->
 ### 4. **UPDATE: Modify Project GPA (Requirement 4)**
    - Each word addition updates project GPA
    - GPA changes visible on dashboard
    - Check `projects` table in database
    - ✅ UPDATE statements modify records
 
+<!-- section_id: "0c8cfa6e-0ae6-470b-8ecc-ec8564fc4e8c" -->
 ### 5. **DELETE: Remove Words (Requirement 5)**
    - Click "Delete" on any word
    - Word disappears from page
    - Verify word removed from database
    - ✅ DELETE statements remove records
 
+<!-- section_id: "e96b424b-8e92-403a-bcb0-aceba1509181" -->
 ### 6. **JOIN: Multi-Table Queries (Stretch Goal 1)**
    - View words page showing: word + project name
    - This requires JOIN between words and projects tables
    - ✅ JOINs work correctly
 
+<!-- section_id: "2a793c40-40db-48b2-88e4-bd422d61fc4d" -->
 ### 7. **Aggregates: Count & Statistics (Stretch Goal 2)**
    - Dashboard shows total word count
    - Project statistics displayed
    - ✅ COUNT() and aggregate functions working
 
+<!-- section_id: "ac5e9866-f61f-42ae-88e7-b51bfa92795f" -->
 ### 8. **Date Filtering: Recent Words (Stretch Goal 3)**
    - Words page shows "date added"
    - Filter for "words added today" works
@@ -220,6 +242,7 @@ Follow these steps to verify all SQL requirements are working:
 
 ---
 
+<!-- section_id: "0bcb58d4-a547-4458-9509-df60d3df81ef" -->
 ## 📁 Database Schema
 
 ```sql
@@ -254,6 +277,7 @@ CREATE TABLE words (
 
 ---
 
+<!-- section_id: "705b85c7-fe0a-44eb-992a-58c95e53c53f" -->
 ## ✅ Summary
 
 All **5 core SQL requirements** and **3 stretch goals** are fully implemented and demonstrated in the web app:

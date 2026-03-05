@@ -1,3 +1,4 @@
+// resource_id: a2ef2b6f-8ca2-400d-b3bb-e9f1128b4578
 // playwright.config.js
 import { defineConfig, devices } from '@playwright/test';
 

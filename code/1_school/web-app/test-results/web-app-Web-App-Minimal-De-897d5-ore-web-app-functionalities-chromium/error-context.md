@@ -1,3 +1,6 @@
+---
+resource_id: "cbff1fdc-235d-47aa-a47c-d1352aed2324"
+---
 # Page snapshot
 
 ```yaml

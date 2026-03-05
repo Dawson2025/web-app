@@ -1,3 +1,4 @@
+// resource_id: d6deab66-8e2d-46bf-a064-d4d6549d121b
 import { test, expect } from '@playwright/test';
 import { pathToFileURL } from 'url';
 
